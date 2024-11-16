@@ -69,7 +69,7 @@ const parseFerryInfo = (rawInfo: any): VehicleInfo => {
 			vehicleInfo.viewPriority = 100;
 			break;
 		default:
-			vehicleInfo.nickname = 'Not a Dog';
+			vehicleInfo.nickname = 'Not a dog';
 			vehicleInfo.icon = 'Default';
 			break;
 	}

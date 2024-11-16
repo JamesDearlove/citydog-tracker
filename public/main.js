@@ -10,7 +10,7 @@ var imageIcon = L.Icon.extend({
 	options: {
 		iconSize: [40, 40],
 		iconAnchor: [20, 40],
-		popupAnchor: [0, -10],
+		popupAnchor: [0, -35],
 	},
 });
 
