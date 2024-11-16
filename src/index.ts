@@ -3,6 +3,10 @@ import fetch from 'node-fetch';
 
 const TRANSLINK_FEED = 'https://gtfsrt.api.translink.com.au/api/realtime/SEQ/VehiclePositions/Ferry';
 
+/**
+ * Basically templated GTFS-RT code, from https://gtfs.org/documentation/realtime/language-bindings/nodejs/
+ * @returns Raw protobuf data of the GTFS-RT feed.
+ */
 const gtfsResponse = async () => {
 	try {
 		// No auth required for Translink feeds.
