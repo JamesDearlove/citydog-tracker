@@ -4,6 +4,9 @@ main = "src/index.ts"
 compatibility_date = "2024-11-12"
 compatibility_flags = ["nodejs_compat"]
 assets = { directory = "./public", binding = "ASSETS" }
+routes = [
+  { pattern = "citydogs.jimmyd.dev", custom_domain = true },
+]
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/

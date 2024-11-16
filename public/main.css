@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+html,
+body,
+#map {
+	height: 70vh;
+	/* width: 100vw; */
+}
+
+#info-text {
+	padding-bottom: 0.5rem;
+}
+
+/* #map {
+	height: 80%;
+} */

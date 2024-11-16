@@ -1,31 +1,49 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hello, World!</title>
-	</head>
-	<body>
-		<h1 id="heading"></h1>
-		<button id="button">Fetch a random UUID</button>
-		<div id="random"></div>
-		<script>
-			fetch('/message')
-				.then((resp) => resp.text())
-				.then((text) => {
-					const h1 = document.getElementById('heading');
-					h1.textContent = text;
-				});
 
-			const button = document.getElementById("button");
-			button.addEventListener("click", () => {
-				fetch('/random')
-					.then((resp) => resp.text())
-					.then((text) => {
-						const random = document.getElementById('random');
-						random.textContent = text;
-					});
-			});
-		</script>
-	</body>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>CityDog Tracker</title>
+
+	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+</head>
+
+<body>
+	<h1 id="title">CityDog Tracker</h1>
+	<p>Live tracking of where the ferries are on the Brisbane River. Can't spot Bluey or Bingo? They've probably gone
+		for a nap, and will be back soon!</p>
+	<div id="map"></div>
+
+	<div id="info-text">
+		<h2 id="heading">A little more info</h2>
+		<p>Brisbane's main ferries are known as the <a
+				href="https://www.brisbane.qld.gov.au/traffic-and-transport/public-transport/citycat-and-ferry-services">CityCats</a>
+			and the little inner city ones are known as the <a
+				href="https://www.brisbane.qld.gov.au/traffic-and-transport/public-transport/citycat-and-ferry-services/inner-city-ferry-services">KittyCats</a>.
+			With everyone's favourite show Bluey being set primarily in Brisbane, and to celebrate Bluey's World
+			opening, two of our <a href="https://www.bluey.tv/blog/brisbane-welcomes-citydogs/">CityCats have been
+				transformed into CityDogs</a>. With that, I thought to whip together a quick live map of our ferries to
+			make it easier to find where the CityDogs are at.
+			<br /><br />
+			Sometimes the CityDogs named Bluey and Bingo aren't running an active route or live tracking is temporarily
+			unavailable, so they won't appear on the map.
+			<br /><br />
+			This map is made possible by <a
+				href="https://translink.com.au/about-translink/open-data/gtfs-rt">Translink's GTFS-RT Feeds</a> and <a
+				href="https://leafletjs.com/">Leaflet</a>. A little project by <a href="https://jimmyd.dev">JimmyD</a>
+		</p>
+	</div>
+
+	<script src="main.js"></script>
+</body>
+
 </html>
