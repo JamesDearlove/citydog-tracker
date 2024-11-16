@@ -58,7 +58,7 @@ function plotDogs(apiBody) {
 
 	// Attempts to fix the zoom so it's better for mobile.
 	if (!initialZoom) {
-		ferriesGroup = new L.featureGroup(regularFerries.getLayers(), specialFerries.getLayers());
+		ferriesGroup = new L.featureGroup([...regularFerries.getLayers(), ...specialFerries.getLayers()]);
 		map.fitBounds(ferriesGroup.getBounds(), { padding: L.point(50, 50) });
 		initialZoom = true;
 	}
