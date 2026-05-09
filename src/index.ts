@@ -41,7 +41,7 @@ const allLocations = async () => {
  */
 interface VehicleInfo {
 	name: string;
-	icon: 'Bluey' | 'Bingo' | 'Default';
+	icon: 'Bluey' | 'Bingo' | 'CrossRiver' | 'Default';
 	viewPriority?: number;
 	nickname?: string;
 	route?: string;
@@ -63,14 +63,23 @@ const parseFerryInfo = (rawInfo: any): VehicleInfo => {
 
 	switch (vehicleLabel.toLowerCase()) {
 		case 'gootcha':
-			vehicleInfo.nickname = 'Bluey';
+			vehicleInfo.nickname = 'Bluey!';
 			vehicleInfo.icon = 'Bluey';
 			vehicleInfo.viewPriority = 100;
 			break;
 		case 'kuluwin':
-			vehicleInfo.nickname = 'Bingo';
+			vehicleInfo.nickname = 'Bingo!';
 			vehicleInfo.icon = 'Bingo';
 			vehicleInfo.viewPriority = 100;
+			break;
+		case 'victoria':
+		case 'taylor':
+		case 'albert':
+		case 'melany':
+		case 'eleanor':
+			vehicleInfo.nickname = "KittyCat";
+			vehicleInfo.icon = 'CrossRiver';
+			vehicleInfo.viewPriority = 200;
 			break;
 		default:
 			vehicleInfo.nickname = 'Not a dog';
@@ -82,30 +91,28 @@ const parseFerryInfo = (rawInfo: any): VehicleInfo => {
 
 	switch (routeCode) {
 		// CityCats
-		case 'NHAM':
-			vehicleInfo.route = 'Heading towards Northshore Hamilton';
-			break;
-		case 'UQSL':
-			vehicleInfo.route = 'Heading towards UQ St Lucia';
+		case 'F1':
+			vehicleInfo.route = 'F1 - Northshore Hamilton to UQ St Lucia';
 			break;
 		// Cross River Ferries
-		case 'TNRF':
-			vehicleInfo.route = 'Bulimba/Teneriffe Cross River Ferry';
+		case 'F21':
+			vehicleInfo.route = 'F21 - Bulimba/Teneriffe Cross River Ferry';
 			break;
-		case 'HOLM':
-			vehicleInfo.route = 'Inner-City Cross River Ferry';
+		case 'F22':
+			vehicleInfo.route = 'F22 - Sydney Street/Dockside Cross River Ferry';
 			break;
-		case 'HSWS':
-			vehicleInfo.route = 'Inner-City Cross River Ferry';
+		case 'F23':
+			vehicleInfo.route = 'F23 - Riverside/Holman Street Cross River Ferry';
 			break;
-		// KittyCats
-		case 'NTHQ':
-			vehicleInfo.name += ' - KittyCat';
-			vehicleInfo.route = 'Heading towards North Quay';
+		case 'F24':
+			vehicleInfo.route = 'F24 - Maritime Museum/QUT Gardens Point Cross River Ferry';
 			break;
-		case 'SYDS':
-			vehicleInfo.name += ' - KittyCat';
-			vehicleInfo.route = 'Heading towards Sydney Street';
+		// SpeedyCats
+		case 'F11':
+			vehicleInfo.route = 'F11 - Apollo Road to Riverside SpeedyCat';
+			break;
+		case 'F12':
+			vehicleInfo.route = 'F12 - West End to QUT Gardens Point SpeedyCat';
 			break;
 		// Not part of the Brisbane fleet, so ignore (therefore chaos)
 		default:
@@ -116,10 +123,18 @@ const parseFerryInfo = (rawInfo: any): VehicleInfo => {
 	return vehicleInfo;
 };
 
+const NON_BRIS = ['F50', 'SMBI'];
+
+const filterNonBrisbane = (v: GtfsRealtimeBindings.transit_realtime.IFeedEntity) => {
+	const route = v.vehicle?.trip?.routeId?.split('-')[0] ?? ''
+	return !NON_BRIS.includes(route);
+}
+
 const parsedLocations = async () => {
 	const ferryLocations = await gtfsResponse();
-	// Deal with SMBI ferries, those aren't in Brisbane.
-	const ferries = ferryLocations?.entity.filter((v) => v.vehicle?.trip?.routeId?.slice(0, 4) !== 'SMBI');
+
+	// The feed includes all SEQ live tracked ferries, filter out non Brisbane ferries.
+	const ferries = ferryLocations?.entity.filter((v) => filterNonBrisbane(v));
 	const dtoFerries = ferries?.map((v) => parseFerryInfo(v))
 
 	return new Response(JSON.stringify(dtoFerries));

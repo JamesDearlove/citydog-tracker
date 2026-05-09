@@ -17,13 +17,15 @@ var imageIcon = L.Icon.extend({
 var blueyIcon = new imageIcon({ iconUrl: 'images/bluey_crop.png' }),
 	bingoIcon = new imageIcon({ iconUrl: 'images/bingo_crop.png' }),
 	defaultIcon = new imageIcon({ iconUrl: 'images/translink_ferry.svg'});
+	crossRiverIcon = new imageIcon({ iconUrl: 'images/translink_cr_ferry.svg'})
 
 var initialZoom = false;
 
 var regularFerries = new L.layerGroup().addTo(map);
 var specialFerries = new L.layerGroup().addTo(map);
+var kittyCats = new L.layerGroup().addTo(map);
 
-var layers = { CityDogs: specialFerries, 'Other Ferries': regularFerries };
+var layers = { CityDogs: specialFerries, KittyCats: kittyCats, 'Other Ferries': regularFerries };
 var layerControl = L.control.layers({}, layers).addTo(map);
 
 function iconMapping(icon) {
@@ -32,6 +34,8 @@ function iconMapping(icon) {
 			return blueyIcon;
 		case 'Bingo':
 			return bingoIcon;
+		case 'CrossRiver':
+			return crossRiverIcon;
 		default:
 			return defaultIcon;
 	}
@@ -40,6 +44,7 @@ function iconMapping(icon) {
 function plotDogs(apiBody) {
 	regularFerries.getLayers().forEach((m) => regularFerries.removeLayer(m));
 	specialFerries.getLayers().forEach((m) => specialFerries.removeLayer(m));
+	kittyCats.getLayers().forEach((m) => kittyCats.removeLayer(m))
 
 	apiBody.forEach((ferry) => {
 		const marker = L.marker(ferry.location, { icon: iconMapping(ferry.icon), zIndexOffset: ferry.viewPriority }).bindPopup(
@@ -49,6 +54,9 @@ function plotDogs(apiBody) {
 		switch (ferry.viewPriority) {
 			case 100:
 				specialFerries.addLayer(marker);
+				break;
+			case 200:
+				kittyCats.addLayer(marker);
 				break;
 			default:
 				regularFerries.addLayer(marker);
