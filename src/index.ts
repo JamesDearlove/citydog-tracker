@@ -33,7 +33,7 @@ const gtfsResponse = async () => {
 const allLocations = async () => {
 	const ferryLocations = await gtfsResponse();
 
-	return new Response(JSON.stringify(ferryLocations?.entity));
+	return Response.json(ferryLocations?.entity);
 };
 
 /**
@@ -137,7 +137,7 @@ const parsedLocations = async () => {
 	const ferries = ferryLocations?.entity.filter((v) => filterNonBrisbane(v));
 	const dtoFerries = ferries?.map((v) => parseFerryInfo(v))
 
-	return new Response(JSON.stringify(dtoFerries));
+	return Response.json(dtoFerries);
 };
 
 export default {
