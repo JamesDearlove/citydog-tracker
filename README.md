@@ -14,8 +14,9 @@ This map is made possible by [Translink's GTFS-RT Feeds](https://translink.com.a
 
 ## Builds/Deploying
 
-This is built and deployed with Cloudflare Workers
+This is built and deployed with Cloudflare Workers.
 
-- Run `npm run dev` in your terminal to start a development server
-- Open a browser tab at http://localhost:8787/ to see your worker in action
-- Run `npm run deploy` to publish your worker
+- Run `npm run dev` in your terminal to start a development server.
+- Open a browser tab at http://localhost:8787/ to see your worker in action.
+- Run `npm run deploy` to publish your worker.
+
